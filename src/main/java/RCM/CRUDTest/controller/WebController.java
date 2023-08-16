@@ -2,13 +2,14 @@ package RCM.CRUDTest.controller;
 
 import RCM.CRUDTest.dto.DetailDTO;
 import RCM.CRUDTest.dto.ListDTO;
+import RCM.CRUDTest.dto.UpdateDTO;
+import RCM.CRUDTest.dto.UpdateFormDTO;
 import RCM.CRUDTest.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +25,14 @@ public class WebController {
         model.addAttribute("post", post);
 
         return "detail";
+    }
+
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable Long id, Model model){
+        UpdateDTO post = boardService.getUpdateDTO(id);
+        model.addAttribute("post", post);
+
+        return "update";
     }
 
     @GetMapping("/")
@@ -47,9 +56,8 @@ public class WebController {
     }
 
     @GetMapping("/new")
-    public String newPost(){
+    public String newPost() {
 
         return "new";
     }
-
 }

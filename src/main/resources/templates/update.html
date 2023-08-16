@@ -4,21 +4,21 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 <head th:replace="~{fragment/header::headerFragment(~{::title})}">
-    <title th:text="등록"></title>
+    <title th:text="수정"></title>
 </head>
 <body>
 <th:block layout:fragment="content">
     <div>
-        <h2>새 글 작성</h2>
+        <h2>글 수정</h2>
         <div>
             <label for="title">제목</label><br/>
-            <input title="글제목" type="text" name="title" id="title"/>
+            <input title="글제목" type="text" name="title" id="title" th:value="${post.title}"/>
         </div>
         <br/>
         <div class="content-box">
             <label>내용</label><br/>
-            <textarea class="content" name="content"
-                      rows="10" cols="50"></textarea>
+            <textarea id="txtArea" class="content" name="content"
+                      rows="10" cols="50" th:text="${post.content}"></textarea>
         </div>
         <button id="save" type="button">저장</button>
     </div>
@@ -27,11 +27,15 @@
 <th:block layout:fragment="script">
     <script type="text/javascript">
 
-        $(function () {
+        $(document).ready(function () {
+            /*<![CDATA[*/
+            var id = "[[${post.id}]]";
+            console.log(id)
+
             $('#save').click((event) => {
                 const title = $('#title').val();
                 const content = $('.content').val();
-                const memberId = localStorage.getItem("id");
+
                 if (title == '') {
                     alert('제목을 입력해주세요');
                     return;
@@ -41,16 +45,14 @@
                     return;
                 }
 
-
-                const path = 'http://localhost:8086/api/posts';
+                const path = 'http://localhost:8086/api/posts/'+ id;
                 const json = JSON.stringify({
                     'title': title,
                     'content': content,
-                    'memberId': memberId
                 });
                 $.ajax({
                     url: path,
-                    type: 'POST',
+                    type: 'PATCH',
                     contentType: 'application/json',
                     data: json,
                 }).done((response) => {
@@ -64,6 +66,8 @@
                 });
             });
         });
+        /*]]*/
+
 
     </script>
 </th:block>

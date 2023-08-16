@@ -63,6 +63,14 @@
                     });
                 }
             })
+
+            $('#update').click((event) => {
+                if (localStorage.getItem('id') != memberId) {
+                    alert('권한이 없습니다');
+                } else {
+                    location.href = "http://localhost:8086/update/" + id;
+                }
+            })
         });
 
         /*]]*/

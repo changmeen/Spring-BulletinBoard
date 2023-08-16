@@ -3,6 +3,7 @@ package RCM.CRUDTest.controller;
 import RCM.CRUDTest.dto.LoginDTO;
 import RCM.CRUDTest.dto.PostFormDTO;
 import RCM.CRUDTest.dto.SignUpFormDTO;
+import RCM.CRUDTest.dto.UpdateFormDTO;
 import RCM.CRUDTest.service.interfaces.BoardService;
 import RCM.CRUDTest.service.interfaces.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,13 @@ public class ApiController {
     @PostMapping("/posts")
     public ResponseEntity save(@RequestBody PostFormDTO formDTO){
         ResponseEntity responseEntity = boardService.save(formDTO);
+        return responseEntity;
+    }
+
+    @PatchMapping("/posts/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody UpdateFormDTO updateFormDTO){
+        ResponseEntity responseEntity = boardService.update(id, updateFormDTO);
+
         return responseEntity;
     }
 

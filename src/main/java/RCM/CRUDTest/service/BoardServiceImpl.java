@@ -3,9 +3,7 @@ package RCM.CRUDTest.service;
 import RCM.CRUDTest.domain.Board;
 import RCM.CRUDTest.domain.Member;
 import RCM.CRUDTest.domain.MemberRole;
-import RCM.CRUDTest.dto.DetailDTO;
-import RCM.CRUDTest.dto.ListDTO;
-import RCM.CRUDTest.dto.PostFormDTO;
+import RCM.CRUDTest.dto.*;
 import RCM.CRUDTest.repository.BoardRepository;
 import RCM.CRUDTest.repository.MemberRepository;
 import RCM.CRUDTest.service.interfaces.BoardService;
@@ -56,10 +54,34 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public ResponseEntity remove(Long id) {
-
         boardRepository.deleteById(id);
+
         return new ResponseEntity("success", HttpStatus.OK);
 
+    }
+
+    @Override
+    public ResponseEntity update(Long id, UpdateFormDTO updateFormDTO){
+        Optional<Board> board = boardRepository.findById(id);
+        Board boardEntity = board.orElseGet(null);
+
+        boardEntity.update(updateFormDTO);
+
+        return new ResponseEntity("success", HttpStatus.OK);
+    }
+
+    @Override
+    public UpdateDTO getUpdateDTO(Long id){
+        Optional<Board> board = boardRepository.findById(id);
+        Board boardEntity = board.orElseGet(null);
+
+        UpdateDTO updateDTO = UpdateDTO.builder()
+                .id(boardEntity.getId())
+                .title(boardEntity.getTitle())
+                .content(boardEntity.getContent())
+                .build();
+
+        return updateDTO;
     }
 
     @Override

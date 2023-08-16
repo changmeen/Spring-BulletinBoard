@@ -1,5 +1,7 @@
 package RCM.CRUDTest.domain;
 
+import RCM.CRUDTest.dto.UpdateDTO;
+import RCM.CRUDTest.dto.UpdateFormDTO;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -20,6 +22,12 @@ public class Board {
 
     public void countUser(){
         this.userViews++;
+    }
+
+    public void update(UpdateFormDTO updateFormDTO){
+        this.title = updateFormDTO.getTitle();
+        this.content = updateFormDTO.getContent();
+        this.updatedAt = LocalDateTime.now();
     }
 
     @Id
