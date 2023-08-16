@@ -31,4 +31,10 @@ public class ApiController {
         ResponseEntity responseEntity = boardService.save(formDTO);
         return responseEntity;
     }
+
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity remove(@PathVariable Long id){
+        ResponseEntity responseEntity = boardService.remove(id);
+        return responseEntity;
+    }
 }

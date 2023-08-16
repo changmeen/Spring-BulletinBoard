@@ -10,6 +10,8 @@ import java.util.List;
 public interface BoardService {
     ResponseEntity save(PostFormDTO formDTO);
 
+    ResponseEntity remove(Long id);
+
     List<ListDTO> getAll();
 
     DetailDTO getDetail(Long id, String memberId);

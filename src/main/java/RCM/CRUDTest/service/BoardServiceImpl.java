@@ -55,6 +55,14 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public ResponseEntity remove(Long id) {
+
+        boardRepository.deleteById(id);
+        return new ResponseEntity("success", HttpStatus.OK);
+
+    }
+
+    @Override
     public List<ListDTO> getAll() {
 
         List<Board> posts = boardRepository.findAll();
@@ -101,6 +109,7 @@ public class BoardServiceImpl implements BoardService {
                 .updatedAt(boardEntity.getUpdatedAt())
                 .userViews(boardEntity.getUserViews())
                 .adminViews(boardEntity.getAdminViews())
+                .memberId((member.getId()))
                 .memberName(member.getName())
                 .build();
 
